@@ -15,7 +15,7 @@ public class NewsDataArrayAdapter extends ArrayAdapter<NewsData>{
     public NewsDataArrayAdapter(Context context, List<NewsData> objects) {
         super(context, 0, objects);
     }
-
+/****************************** update UI from data*****************/
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View listItemView = convertView;

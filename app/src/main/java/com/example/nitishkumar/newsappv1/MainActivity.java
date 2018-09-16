@@ -25,6 +25,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private static final int NEWS_LOADER_ID = 1;
     private NewsDataArrayAdapter mAdapter;
     private TextView mEmptyStateTextView;
+    private ConnectivityManager connectivityManager;
+    private NetworkInfo networkInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +49,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             }
         });
 
-        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        networkInfo = connectivityManager.getActiveNetworkInfo();
 
         if (networkInfo != null && networkInfo.isConnected())
         {
@@ -80,6 +82,20 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         if (data != null && !data.isEmpty())
         {
             mAdapter.addAll(data);
+        }
+        else
+        {
+            connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+            networkInfo = connectivityManager.getActiveNetworkInfo();
+            loadingIndicator.setVisibility(View.GONE);
+            if (networkInfo != null && networkInfo.isConnected())
+            {
+                mEmptyStateTextView.setText(R.string.no_news);
+            }
+            else
+            {
+                mEmptyStateTextView.setText(R.string.no_internet_connection);
+            }
         }
     }
 

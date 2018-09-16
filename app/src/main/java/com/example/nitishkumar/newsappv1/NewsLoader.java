@@ -12,12 +12,12 @@ public class NewsLoader extends AsyncTaskLoader<List<NewsData>>{
         super(context);
         mUrl = url;
     }
-
+/*********************** invoked on loader start******************/
     @Override
     protected void onStartLoading() {
         forceLoad();
     }
-
+/**************************** run tread in background to load data***************/
     @Override
     public List<NewsData> loadInBackground() {
         if (mUrl == null)
